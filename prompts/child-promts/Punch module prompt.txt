@@ -1,0 +1,41 @@
+Punch In/Punch Out Module
+This module helps employees record their work start and end times.
+
+Controller Methods
+The controller handles incoming requests from employees:
+
+Handle Punch In: When an employee wants to punch in, a POST request is sent to the api/v1/attendance/punch-in address.
+Handle Punch Out: When an employee wants to punch out, a POST request is sent to the api/v1/attendance/punch-out address.
+Service Methods
+The service contains the core business rules:
+
+Punch-in Logic:
+Checks if the employee has already punched in.
+If not, it saves the punch-in details to the database.
+Punch-out Logic:
+Checks if the employee has punched in first.
+Calculates how long the employee worked (duration).
+Saves the punch-out details to the database.
+Important Note: The punch-out time must always be after the punch-in time.
+Thymeleaf Pages
+You'll use Thymeleaf to create simple web pages for employees:
+
+A Punch In page with a button for employees to record their start time.
+A Punch Out page with a button for employees to record their end time.
+Both of these pages will be accessible from a main attendance page.
+Database Interaction
+We'll store all punch records in a table named punches. This table will have the following columns:
+
+id: A unique identifier for each punch record.
+empId: The employee's ID.
+date: The date of the punch.
+checkin: The time the employee punched in.
+checkout: The time the employee punched out.
+We'll use JPA (Java Persistence API) to save punch-in and punch-out records to this punches table.
+
+Error Handling
+User Feedback: When there's a problem (e.g., trying to punch in twice), a simple alert message will pop up on the web page for the user. Examples include "Already punched in" or "Not punched in."
+Auditing: Any errors will be logged for tracking and auditing purposes.
+Util Notes
+Employee ID Validation: Since we don't have full security yet, we'll use a utility method called TokenExtractor.getEmpId(). This method will return a dummy ID to identify the employee making the request.
+Architecture & DOTs: We'll follow all the architectural patterns from the main project and use appropriate Data Transfer Objects (DTOs) for attendance data.
